@@ -83,15 +83,15 @@ namespace SualCavabAPI.Controllers
             return insert.addComment(mail, pass, publicationID, commentID,comment);
 
         }
-        [HttpPost]
-        [Route("accounts/add/post")]
+      //  [HttpPost]
+       // [Route("accounts/add/post")]
         // GET: sualcavab/Details/5
-        public ActionResult<List<StatusStruct>> addPost([FromBody]NewPublication newPublication)
-        {
-            DbInsert insert = new DbInsert(Configuration, _hostingEnvironment);
-            return insert.signUp(newUser);
+        //public ActionResult<List<StatusStruct>> addPost([FromBody]NewPublication newPublication)
+       // {
+         //   DbInsert insert = new DbInsert(Configuration, _hostingEnvironment);
+       //     return insert.signUp(newUser);
 
-        }
+//        }
         [HttpPost]
         [Route("accounts/register")]
         // GET: sualcavab/Details/5

@@ -156,6 +156,8 @@ namespace SualCavabAPI.Model.Database
                             PublicationsStruct publication = new PublicationsStruct();
                             publication.id = Convert.ToInt32(reader["ID"]);
                             publication.publisher = $"{reader["userName"].ToString()} {reader["userSurname"].ToString()}";
+                            publication.name = reader["name"].ToString();
+
                             publication.description = reader["description"].ToString();
 
                             if (userList.Count > 0)

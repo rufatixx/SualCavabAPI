@@ -224,76 +224,76 @@ namespace SualCavabAPI.Model.Database
 
         }
 
-        public List<StatusStruct> newPost(NewPublication newPublication)
+        //public List<StatusStruct> newPost(NewPublication newPublication)
 
-        {
-            List<StatusStruct> statusList = new List<StatusStruct>();
-            StatusStruct status = new StatusStruct();
-            if (!string.IsNullOrEmpty(newUser.mail) && !string.IsNullOrEmpty(newUser.pass) && !string.IsNullOrEmpty(newUser.name) && !string.IsNullOrEmpty(newUser.surname))
-            {
-                DbSelect select = new DbSelect(Configuration, _hostingEnvironment);
-                status = select.IsValid(newUser.mail);
-                if (status.response == 0)
-                {
-                    try
-                    {
-
-
-
-
-
-                        using (MySqlConnection connection = new MySqlConnection(ConnectionString))
-                        {
-
-
-                            connection.Open();
+        //{
+        //    List<StatusStruct> statusList = new List<StatusStruct>();
+        //    StatusStruct status = new StatusStruct();
+        //    if (!string.IsNullOrEmpty(newUser.mail) && !string.IsNullOrEmpty(newUser.pass) && !string.IsNullOrEmpty(newUser.name) && !string.IsNullOrEmpty(newUser.surname))
+        //    {
+        //        DbSelect select = new DbSelect(Configuration, _hostingEnvironment);
+        //        status = select.IsValid(newUser.mail);
+        //        if (status.response == 0)
+        //        {
+        //            try
+        //            {
 
 
 
 
-                            using (MySqlCommand com = new MySqlCommand("inser into user (name,surname,email,passwd) values (@name,@surname,@email,SHA2(@passwd,512))", connection))
-                            {
 
-                                com.Parameters.AddWithValue("@name", newUser.name.ToString());
-                                com.Parameters.AddWithValue("@surname", newUser.surname.ToString());
-                                com.Parameters.AddWithValue("@email", newUser.mail.ToString());
-                                com.Parameters.AddWithValue("@passwd", newUser.pass.ToString());
+        //                using (MySqlConnection connection = new MySqlConnection(ConnectionString))
+        //                {
 
 
-                                com.ExecuteNonQuery();
+        //                    connection.Open();
 
 
-                                com.Dispose();
-                            }
 
 
-                            connection.Close();
-                            connection.Dispose();
-                        }
+        //                    using (MySqlCommand com = new MySqlCommand("inser into user (name,surname,email,passwd) values (@name,@surname,@email,SHA2(@passwd,512))", connection))
+        //                    {
 
-                        status.response = 0;
+        //                        com.Parameters.AddWithValue("@name", newUser.name.ToString());
+        //                        com.Parameters.AddWithValue("@surname", newUser.surname.ToString());
+        //                        com.Parameters.AddWithValue("@email", newUser.mail.ToString());
+        //                        com.Parameters.AddWithValue("@passwd", newUser.pass.ToString());
 
-                    }
-                    catch (Exception ex)
-                    {
 
-                        status.response = 1;
-                        status.responseString = ex.Message;
+        //                        com.ExecuteNonQuery();
 
-                    }
-                }
 
-            }
-            else
-            {
-                status.response = 3;
-                status.responseString = "Params error";
+        //                        com.Dispose();
+        //                    }
 
-            }
-            statusList.Add(status);
-            return statusList;
 
-        }
+        //                    connection.Close();
+        //                    connection.Dispose();
+        //                }
+
+        //                status.response = 0;
+
+        //            }
+        //            catch (Exception ex)
+        //            {
+
+        //                status.response = 1;
+        //                status.responseString = ex.Message;
+
+        //            }
+        //        }
+
+        //    }
+        //    else
+        //    {
+        //        status.response = 3;
+        //        status.responseString = "Params error";
+
+        //    }
+        //    statusList.Add(status);
+        //    return statusList;
+
+        //}
 
 
     }
