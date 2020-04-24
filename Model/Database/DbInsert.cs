@@ -50,7 +50,7 @@ namespace SualCavabAPI.Model.Database
                     
 
                    
-                        using (MySqlCommand com = new MySqlCommand("insert into publication_coments (reaction,publicationID,userID,cdate) values (@reaction,@publicationID,@userID,now())", connection))
+                        using (MySqlCommand com = new MySqlCommand("insert into publication_reaction (reaction,publicationID,userID,cdate) values (@reaction,@publicationID,@userID,now())", connection))
                         {
 
                             com.Parameters.AddWithValue("@reaction", reaction.ToString());
@@ -159,7 +159,7 @@ namespace SualCavabAPI.Model.Database
         {
             List<StatusStruct> statusList = new List<StatusStruct>();
             StatusStruct status = new StatusStruct();
-            if (!string.IsNullOrEmpty(newUser.mail) && !string.IsNullOrEmpty(newUser.pass) && !string.IsNullOrEmpty(newUser.name) && !string.IsNullOrEmpty(newUser.surname))
+            if (!string.IsNullOrEmpty(newUser.mail) && !string.IsNullOrEmpty(newUser.pass) && !string.IsNullOrEmpty(newUser.name) && !string.IsNullOrEmpty(newUser.surname)&&newUser.professionID>0)
             {
                 DbSelect select = new DbSelect(Configuration, _hostingEnvironment);
                 status = select.IsValid(newUser.mail);
@@ -181,13 +181,14 @@ namespace SualCavabAPI.Model.Database
 
 
 
-                            using (MySqlCommand com = new MySqlCommand("insert into user (name,surname,email,passwd) values (@name,@surname,@email,SHA2(@passwd,512))", connection))
+                            using (MySqlCommand com = new MySqlCommand("insert into user (name,surname,email,passwd,professionID) values (@name,@surname,@email,SHA2(@passwd,512),@professionID)", connection))
                             {
 
                                 com.Parameters.AddWithValue("@name", newUser.name.ToString());
                                 com.Parameters.AddWithValue("@surname", newUser.surname.ToString());
                                 com.Parameters.AddWithValue("@email", newUser.mail.ToString());
                                 com.Parameters.AddWithValue("@passwd", newUser.pass.ToString());
+                                com.Parameters.AddWithValue("@professionID", newUser.professionID);
 
 
                                 com.ExecuteNonQuery();

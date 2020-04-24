@@ -11,6 +11,7 @@ namespace SualCavabAPI.Model.Structs
         public string pass { get; set; }
         public string name { get; set; }
         public string surname { get; set; }
+        public int professionID { get; set; }
 
     }
 }

@@ -1,8 +1,8 @@
 ﻿<Properties StartupConfiguration="{6BB39FE7-26F7-40B1-A028-7B87DC871D35}|Default">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Controllers/sualcavabController.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Model/Database/DbInsert.cs">
     <Files>
-      <File FileName="Controllers/sualcavabController.cs" Line="52" Column="40" />
-      <File FileName="Model/Database/DbInsert.cs" />
+      <File FileName="Controllers/sualcavabController.cs" Line="74" Column="33" />
+      <File FileName="Model/Database/DbInsert.cs" Line="28" Column="105" />
       <File FileName="Model/Structs/NewPublication.cs" />
       <File FileName="Model/Database/DbSelect.cs" />
       <File FileName="Model/Structs/PublicationsStruct.cs" />
@@ -15,11 +15,11 @@
         <State name="__root__">
           <Node name="SualCavabAPI" expanded="True">
             <Node name="SualCavabAPI" expanded="True">
-              <Node name="Controllers" expanded="True">
-                <Node name="sualcavabController.cs" selected="True" />
-              </Node>
+              <Node name="Controllers" expanded="True" />
               <Node name="Model" expanded="True">
-                <Node name="Database" expanded="True" />
+                <Node name="Database" expanded="True">
+                  <Node name="DbInsert.cs" selected="True" />
+                </Node>
                 <Node name="Structs" expanded="True" />
               </Node>
             </Node>
