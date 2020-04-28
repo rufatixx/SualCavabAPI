@@ -1,14 +1,16 @@
 ﻿<Properties StartupConfiguration="{6BB39FE7-26F7-40B1-A028-7B87DC871D35}|Default">
   <MonoDevelop.Ide.Workbench ActiveDocument="Model/Database/DbInsert.cs">
     <Files>
-      <File FileName="Controllers/sualcavabController.cs" Line="74" Column="33" />
-      <File FileName="Model/Database/DbInsert.cs" Line="28" Column="105" />
-      <File FileName="Model/Structs/NewPublication.cs" />
-      <File FileName="Model/Database/DbSelect.cs" />
-      <File FileName="Model/Structs/PublicationsStruct.cs" />
-      <File FileName="Model/Structs/User.cs" />
+      <File FileName="Model/Structs/NewPublication.cs" Line="16" Column="6" />
+      <File FileName="Model/Database/DbInsert.cs" Line="311" Column="85" />
+      <File FileName="Model/Database/DbSelect.cs" Line="465" Column="29" />
+      <File FileName="Model/Structs/User.cs" Line="1" Column="1" />
       <File FileName="Model/Structs/NewUser.cs" />
       <File FileName="Model/Structs/CommentStruct.cs" />
+      <File FileName="Program.cs" />
+      <File FileName="Startup.cs" />
+      <File FileName="WeatherForecast.cs" />
+      <File FileName="appsettings.json" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -22,6 +24,7 @@
                 </Node>
                 <Node name="Structs" expanded="True" />
               </Node>
+              <Node name="wwwroot" expanded="True" />
             </Node>
           </Node>
         </State>
@@ -32,7 +35,10 @@
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
   <MonoDevelop.Ide.ItemProperties.SualCavabAPI PreferredExecutionTarget="/Applications/Safari.app" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
-    <BreakpointStore />
+    <BreakpointStore>
+      <Breakpoint file="/Users/rufat/Documents/GitHub/SualCavabAPI/Model/Database/DbInsert.cs" relfile="Model/Database/DbInsert.cs" line="54" column="1" />
+      <Breakpoint file="/Users/rufat/Documents/GitHub/SualCavabAPI/Model/Database/DbInsert.cs" relfile="Model/Database/DbInsert.cs" line="53" column="1" />
+    </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MultiItemStartupConfigurations />
 </Properties>

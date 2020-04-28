@@ -28,58 +28,111 @@ namespace SualCavabAPI.Model.Database
         public List<StatusStruct> addReaction(string mail, string pass, int publicationID, int reaction)
 
         {
-           List<StatusStruct> statusList = new List<StatusStruct>();
+            List<StatusStruct> statusList = new List<StatusStruct>();
             StatusStruct status = new StatusStruct();
-            if (!string.IsNullOrEmpty(mail) && !string.IsNullOrEmpty(pass) && publicationID > 0 && reaction > 0)
+            if (!string.IsNullOrEmpty(mail) && !string.IsNullOrEmpty(pass) && publicationID > 0 && reaction >= 0)
             {
                 try
                 {
 
-               
-                
-                DbSelect select = new DbSelect(Configuration, _hostingEnvironment);
-                List<User> userList = select.logIn(mail, pass);
-                int reactionID = 0;
-
-                using (MySqlConnection connection = new MySqlConnection(ConnectionString))
-                {
 
 
-                    connection.Open();
+                    DbSelect select = new DbSelect(Configuration, _hostingEnvironment);
+                    List<User> userList = select.logIn(mail, pass);
+                    int reactionID = 0;
+                    bool excepts = false;
+                    if (userList.Count > 0)
+                    {
 
-                    
 
-                   
-                        using (MySqlCommand com = new MySqlCommand("insert into publication_reaction (reaction,publicationID,userID,cdate) values (@reaction,@publicationID,@userID,now())", connection))
+                        using (MySqlConnection connection = new MySqlConnection(ConnectionString))
                         {
 
-                            com.Parameters.AddWithValue("@reaction", reaction.ToString());
-                            com.Parameters.AddWithValue("@publicationID", publicationID.ToString());
+
+                            connection.Open();
+
+
+                            using (MySqlCommand com = new MySqlCommand("select * from publication_reactions where userID=@userID and publicationID=@pID", connection))
+                            {
+
+
+                                com.Parameters.AddWithValue("@pID", publicationID.ToString());
                                 com.Parameters.AddWithValue("@userID", userList[0].ID.ToString());
 
+                            
 
-                                com.ExecuteNonQuery();
+                                
+                                using (MySqlDataReader reader = com.ExecuteReader())
+                                {
+
+                                    if (reader.HasRows)
+                                    {
+                                        excepts = true;
+
+                                    }
+                                }
 
 
-                            com.Dispose();
+                                com.Dispose();
+                            }
+                            if (excepts)
+                            {
+                                using (MySqlCommand com = new MySqlCommand("update publication_reactions set reaction=@reaction,publicationID=@pID,userID=@userID,cdate=now() where userID=@userID and publicationID=@pID", connection))
+                                {
+
+                                    com.Parameters.AddWithValue("@reaction", reaction.ToString());
+                                    com.Parameters.AddWithValue("@pID", publicationID.ToString());
+                                    com.Parameters.AddWithValue("@userID", userList[0].ID.ToString());
+
+
+                                    com.ExecuteNonQuery();
+
+
+                                    com.Dispose();
+                                }
+                            }
+                            else
+                            {
+                                using (MySqlCommand com = new MySqlCommand("insert into publication_reactions (reaction,publicationID,userID,cdate) values (@reaction,@publicationID,@userID,now())", connection))
+                                {
+
+                                    com.Parameters.AddWithValue("@reaction", reaction.ToString());
+                                    com.Parameters.AddWithValue("@publicationID", publicationID.ToString());
+                                    com.Parameters.AddWithValue("@userID", userList[0].ID.ToString());
+
+
+                                    com.ExecuteNonQuery();
+
+
+                                    com.Dispose();
+                                }
+                            }
+
+
+
+                            connection.Close();
+                            connection.Dispose();
                         }
-                    
 
-                    connection.Close();
-                    connection.Dispose();
-                }
-                    
-                    status.response = 0;
-                  
-                }
+                        status.response = 0;
+                    }
+                    else
+                    {
+                        status.response = 2;
+                        status.responseString = "User not found";
+                    }
+
+                    }
                 catch (Exception ex)
                 {
-                   
+
                     status.response = 1;
                     status.responseString = ex.Message;
-                   
+
                 }
-            }
+
+            
+        }
             statusList.Add(status);
             return statusList;
 
@@ -225,76 +278,90 @@ namespace SualCavabAPI.Model.Database
 
         }
 
-        //public List<StatusStruct> newPost(NewPublication newPublication)
+        public List<StatusStruct> newPost(NewPublication newPublication)
 
-        //{
-        //    List<StatusStruct> statusList = new List<StatusStruct>();
-        //    StatusStruct status = new StatusStruct();
-        //    if (!string.IsNullOrEmpty(newUser.mail) && !string.IsNullOrEmpty(newUser.pass) && !string.IsNullOrEmpty(newUser.name) && !string.IsNullOrEmpty(newUser.surname))
-        //    {
-        //        DbSelect select = new DbSelect(Configuration, _hostingEnvironment);
-        //        status = select.IsValid(newUser.mail);
-        //        if (status.response == 0)
-        //        {
-        //            try
-        //            {
-
-
-
-
-
-        //                using (MySqlConnection connection = new MySqlConnection(ConnectionString))
-        //                {
-
-
-        //                    connection.Open();
+        {
+            List<StatusStruct> statusList = new List<StatusStruct>();
+            StatusStruct status = new StatusStruct();
+            if (!string.IsNullOrEmpty(newPublication.mail) && !string.IsNullOrEmpty(newPublication.pass) && !string.IsNullOrEmpty(newPublication.name) && newPublication.topicID>0&& newPublication.backgroundImageID>0)
+            {
+                DbSelect select = new DbSelect(Configuration, _hostingEnvironment);
+                List<User> userList = select.logIn(newPublication.mail, newPublication.pass);
+                if (userList.Count>0)
+                {
+                    try
+                    {
 
 
 
 
-        //                    using (MySqlCommand com = new MySqlCommand("inser into user (name,surname,email,passwd) values (@name,@surname,@email,SHA2(@passwd,512))", connection))
-        //                    {
 
-        //                        com.Parameters.AddWithValue("@name", newUser.name.ToString());
-        //                        com.Parameters.AddWithValue("@surname", newUser.surname.ToString());
-        //                        com.Parameters.AddWithValue("@email", newUser.mail.ToString());
-        //                        com.Parameters.AddWithValue("@passwd", newUser.pass.ToString());
+                        using (MySqlConnection connection = new MySqlConnection(ConnectionString))
+                        {
 
 
-        //                        com.ExecuteNonQuery();
+                            connection.Open();
 
 
-        //                        com.Dispose();
-        //                    }
 
 
-        //                    connection.Close();
-        //                    connection.Dispose();
-        //                }
+                            using (MySqlCommand com = new MySqlCommand("inser into publications (name,topicID,userID) values (@name,@topicID,@userID)", connection))
+                            {
 
-        //                status.response = 0;
+                                com.Parameters.AddWithValue("@name", newPublication.name.ToString());
+                                com.Parameters.AddWithValue("@topicID", newPublication.topicID);
+                                com.Parameters.AddWithValue("@userID", userList[0].ID);
+                              
 
-        //            }
-        //            catch (Exception ex)
-        //            {
 
-        //                status.response = 1;
-        //                status.responseString = ex.Message;
+                                com.ExecuteNonQuery();
 
-        //            }
-        //        }
 
-        //    }
-        //    else
-        //    {
-        //        status.response = 3;
-        //        status.responseString = "Params error";
+                                com.Dispose();
+                            }
+                            using (MySqlCommand com = new MySqlCommand("inser into media (name,topicID,userID) values (@name,@topicID,@userID)", connection))
+                            {
 
-        //    }
-        //    statusList.Add(status);
-        //    return statusList;
+                                com.Parameters.AddWithValue("@name", newPublication.name.ToString());
+                                com.Parameters.AddWithValue("@topicID", newPublication.topicID);
+                                com.Parameters.AddWithValue("@userID", userList[0].ID);
 
-        //}
+
+
+                                com.ExecuteNonQuery();
+
+
+                                com.Dispose();
+                            }
+
+
+                            connection.Close();
+                            connection.Dispose();
+                        }
+
+                        status.response = 0;
+
+                    }
+                    catch (Exception ex)
+                    {
+
+                        status.response = 1;
+                        status.responseString = ex.Message;
+
+                    }
+                }
+
+            }
+            else
+            {
+                status.response = 3;
+                status.responseString = "Params error";
+
+            }
+            statusList.Add(status);
+            return statusList;
+
+        }
 
 
     }

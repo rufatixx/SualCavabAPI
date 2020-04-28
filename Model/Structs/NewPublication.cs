@@ -7,10 +7,11 @@ namespace SualCavabAPI.Model.Structs
 {
     public class NewPublication
     {
-        //public string name { get; set; }
-        //public string name { get; set; }
-        //public string name { get; set; }
-
+        public string mail { get; set; }
+        public string pass { get; set; }
+        public string name { get; set; }
+        public int topicID { get; set; }
+        public int backgroundImageID { get; set; }
 
     }
 }
